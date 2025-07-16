@@ -1,0 +1,10 @@
+# files
+*.pyc
+*.pyo
+.DS_Store
+
+# folders
+temp
+output
+__pycache__/
+.venv

@@ -1,0 +1,13 @@
+[project]
+name = "yokatlas-web-scraper"
+version = "1.0.0"
+description = ""
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "beautifulsoup4>=4.13.4",
+    "halo>=0.0.31",
+    "pyfiglet>=1.0.3",
+    "questionary>=2.1.0",
+    "selenium>=4.34.2",
+]
