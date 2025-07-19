@@ -2,6 +2,7 @@
     Author: @heyits2038
     GitHub: https://github.com/heyits2038
 """
+from typing import Union
 from yokatlas.utils import get_html_content
 
 
@@ -34,3 +35,54 @@ def get_university_list():
         })
 
     return universities
+
+
+def fetch_programs_by_university_id(university_id: str):
+    """
+    Fetch and return the list of programs for the given university ID.
+    """
+    if not university_id or not university_id.strip():
+        raise ValueError("university_id must be a non-empty string.")
+
+    soup = get_html_content(
+        f"https://yokatlas.yok.gov.tr/lisans-univ.php?u={university_id}"
+    )
+
+    if soup is None:
+        raise RuntimeError("Failed to fetch programs for the university.")
+
+    programs = []
+
+    for panel in soup.select(".container .panel.panel-primary"):
+        anchor = panel.select_one(".panel-heading a")
+        if not anchor:
+            continue
+
+        href_val: Union[str, list[str], None] = anchor.get("href")
+        if not href_val:
+            continue
+
+        if isinstance(href_val, list):
+            if not href_val:
+                continue
+
+            href = href_val[0]
+        else:
+            href = href_val
+
+        _, _sep, _id_part = href.partition("=")
+        if not _sep:
+            continue
+
+        program_id = _id_part.strip()
+        program_name = anchor.text.strip()
+
+        if not program_id or not program_name:
+            continue
+
+        programs.append({
+            "program_id": program_id,
+            "program_name": program_name
+        })
+
+    return programs
