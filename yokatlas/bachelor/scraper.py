@@ -6,7 +6,7 @@ from typing import Union
 from yokatlas.utils import get_html_content
 
 
-def get_university_list():
+def fetch_university_list():
     """
     Fetch and return the list of universities.
     """
