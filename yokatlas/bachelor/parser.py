@@ -70,3 +70,28 @@ def parse_programs_by_university_id(soup: BeautifulSoup):
         })
 
     return programs
+
+
+def parse_program_general_info_by_id(soup: BeautifulSoup):
+    """
+    Parse the general information of a program from the BeautifulSoup object.
+    """
+    program = {}
+
+    tables = soup.find_all('table', class_='table table-bordered')
+    program_title = soup.find('big').text if soup.find('big') else None
+
+    for table in tables:
+        tbody = table.find('tbody')
+        rows = tbody.find_all('tr')
+
+        for row in rows:
+            columns = row.find_all('td')
+            key = columns[0].text
+            value = columns[1].text
+
+            program[key] = value
+
+    program["program_title"] = program_title
+
+    return program
