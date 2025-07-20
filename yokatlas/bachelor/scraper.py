@@ -5,7 +5,8 @@
 from yokatlas.utils import get_html_content
 from yokatlas.bachelor.parser import (
     parse_university_list,
-    parse_programs_by_university_id
+    parse_programs_by_university_id,
+    parse_program_general_info_by_id
 )
 
 
@@ -37,3 +38,19 @@ def fetch_programs_by_university_id(university_id: str):
         raise RuntimeError("Failed to fetch programs for the university.")
 
     return parse_programs_by_university_id(soup)
+
+
+def fetch_program_general_info_by_id(program_id: str):
+    """
+    Fetch and return the general information of a program by its ID.
+    """
+    if not program_id or not program_id.strip():
+        raise ValueError("program_id must be a non-empty string.")
+
+    soup = get_html_content(
+        f"https://yokatlas.yok.gov.tr/content/lisans-dynamic/1000_1.php?y={program_id}")
+
+    if soup is None:
+        raise RuntimeError("Failed to fetch program information.")
+
+    return parse_program_general_info_by_id(soup)
