@@ -4,7 +4,9 @@
 .DS_Store
 
 # folders
-temp
-output
+.venv/
+*.egg-info/
 __pycache__/
-.venv
+
+temp/
+output/
