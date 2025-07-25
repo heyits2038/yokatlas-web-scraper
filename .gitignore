@@ -10,3 +10,6 @@ __pycache__/
 
 temp/
 output/
+
+dist/
+build/
